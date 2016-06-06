@@ -1,5 +1,6 @@
 package com.example.bearg.forecast.interfaces;
 
+import com.example.bearg.forecast.JSONResponse;
 import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
 import com.example.bearg.forecast.model.threedayforecast.Forecast;
 import com.google.gson.Gson;
@@ -21,8 +22,6 @@ public interface WeatherService {
     Call<CurrentObservation> getObservation(@Path("location") String location);
 
     @GET("getForecast/q/{location}.json")
-    Call<Forecast> getForecast(@Path("location") String location);
-
-
+    Call<JSONResponse> getForecast(@Path("location") String location);
 
 }

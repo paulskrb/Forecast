@@ -1,23 +1,27 @@
 package com.example.bearg.forecast;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.example.bearg.forecast.interfaces.ConditionsExclusionStrategy;
+import com.example.bearg.forecast.adapters.WeatherAdapter;
 import com.example.bearg.forecast.interfaces.WeatherService;
 import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
+import com.example.bearg.forecast.model.threedayforecast.Forecastday;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -32,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String WEATHER_BASE_URL =
             "http://api.wunderground.com/api/3c39584cb3cf6c8f/";
 
+    private RecyclerView conditionsAndForecastRecycler;
+    private ArrayList<Forecastday> forecastDays;
+    private CurrentObservation observation;
+    private WeatherAdapter weatherAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        initRecycler();
+        loadJSON();
+
+    }
+
+    @NonNull
+    private OkHttpClient getClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -59,7 +74,17 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
+        return httpClient.build();
+    }
 
+    private void initRecycler() {
+        conditionsAndForecastRecycler = (RecyclerView) findViewById(R.id.recycler);
+        conditionsAndForecastRecycler.setLayoutManager(new LinearLayoutManager(this));
+        conditionsAndForecastRecycler.setHasFixedSize(true);
+
+    }
+
+    private void loadJSON() {
 
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(CurrentObservation.class, new CurrentObservationDeserializer())
@@ -68,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(WEATHER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(httpClient.build())
+                .client(getClient())
                 .build();
 
         WeatherService service = retrofit.create(WeatherService.class);
@@ -78,19 +103,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CurrentObservation> call, Response<CurrentObservation> response) {
 
-                final TextView weatherView = (TextView) findViewById(R.id.weather_info);
-                weatherView.setText(response.body().toString());
+                observation = response.body();
+                WeatherAdapter adapter = new WeatherAdapter(observation);
+                conditionsAndForecastRecycler.setAdapter(adapter);
+
             }
 
             @Override
             public void onFailure(Call<CurrentObservation> call, Throwable t) {
-                final TextView weatherView = (TextView) findViewById(R.id.weather_info);
-                weatherView.setText("Something went wrong: " + t.getMessage());
+                Log.d("Error: ", t.getMessage());
             }
         });
 
+        Call<JSONResponse> forecastCall = service.getForecast("27909");
+
+        forecastCall.enqueue(new Callback<JSONResponse>() {
+            @Override
+            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+
+                JSONResponse jsr = response.body();
+                forecastDays = new ArrayList<>(Arrays.asList(jsr.getTextForecasts()));
+                weatherAdapter = new WeatherAdapter(forecastDays);
+                conditionsAndForecastRecycler.setAdapter(weatherAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<JSONResponse> call, Throwable t) {
+                Log.d("Error: ", t.getMessage());
+            }
+        });
 
     }
+
+
 
 
     @Override

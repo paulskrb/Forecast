@@ -21,12 +21,6 @@ public class CurrentObservation {
     @Expose
     public Double tempF;
 
-    @Override
-    public String toString() {
-        return String.format("Time: %s, Weather: %s, Temp: %.1f",
-                observationTime, weather, tempF);
-    }
-
     @SerializedName("image")
     @Expose
     public Image image;
