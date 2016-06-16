@@ -9,10 +9,6 @@ import com.google.gson.annotations.SerializedName;
 public class CurrentObservation {
 
     // these fields will be used
-    @SerializedName("observation_time")
-    @Expose
-    public String observationTime;
-
     @SerializedName("weather")
     @Expose
     public String weather;
@@ -20,6 +16,9 @@ public class CurrentObservation {
     @SerializedName("temp_f")
     @Expose
     public Double tempF;
+
+    // unused
+
 
     @SerializedName("image")
     @Expose
@@ -36,7 +35,9 @@ public class CurrentObservation {
     @SerializedName("station_id")
     @Expose
     public String stationId;
-
+    @SerializedName("observation_time")
+    @Expose
+    public String observationTime;
     @SerializedName("observation_time_rfc822")
     @Expose
     public String observationTimeRfc822;

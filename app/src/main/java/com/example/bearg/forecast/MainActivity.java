@@ -12,24 +12,29 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.example.bearg.forecast.adapters.WeatherAdapter;
+import com.example.bearg.forecast.adapters.ForecastAdapter;
 import com.example.bearg.forecast.interfaces.WeatherService;
-import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
 import com.example.bearg.forecast.model.threedayforecast.Forecastday;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,9 +42,8 @@ public class MainActivity extends AppCompatActivity {
             "http://api.wunderground.com/api/3c39584cb3cf6c8f/";
 
     private RecyclerView conditionsAndForecastRecycler;
-    private ArrayList<Forecastday> forecastDays;
-    private CurrentObservation observation;
-    private WeatherAdapter weatherAdapter;
+    private List<Forecastday> forecastdays = new ArrayList<>();
+    private ForecastAdapter forecastAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,57 +85,72 @@ public class MainActivity extends AppCompatActivity {
         conditionsAndForecastRecycler = (RecyclerView) findViewById(R.id.recycler);
         conditionsAndForecastRecycler.setLayoutManager(new LinearLayoutManager(this));
         conditionsAndForecastRecycler.setHasFixedSize(true);
+        forecastAdapter = new ForecastAdapter(forecastdays);
+        conditionsAndForecastRecycler.setAdapter(forecastAdapter);
 
     }
 
     private void loadJSON() {
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(CurrentObservation.class, new CurrentObservationDeserializer())
+                .registerTypeAdapter(Forecastday.class, new TextForecastDeserializer())
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(WEATHER_BASE_URL)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(WEATHER_BASE_URL)
                 .client(getClient())
                 .build();
 
-        WeatherService service = retrofit.create(WeatherService.class);
-        Call<CurrentObservation> call = service.getObservation("27909");
+        WeatherService weatherService = retrofit.create(WeatherService.class);
+        Observable<ForecastDayListWrapper> forecast = weatherService.getForecast("27909");
 
-        call.enqueue(new Callback<CurrentObservation>() {
-            @Override
-            public void onResponse(Call<CurrentObservation> call, Response<CurrentObservation> response) {
+        forecast.flatMap(forecastDayListWrapper -> Observable.from(forecastDayListWrapper.getTextForecasts()))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Forecastday>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(MainActivity.this, "Weather data updated", Toast.LENGTH_SHORT).show();
+                    }
 
-                observation = response.body();
-                WeatherAdapter adapter = new WeatherAdapter(observation);
-                conditionsAndForecastRecycler.setAdapter(adapter);
+                    @Override
+                    public void onError(final Throwable e) {
+                        e.printStackTrace();
+                        Toast.makeText
+                                (MainActivity.this, "Couldn't retrieve weather data", Toast.LENGTH_LONG)
+                                .show();
+                    }
 
-            }
+                    @Override
+                    public void onNext(final Forecastday forecastday) {
+                        Log.d("DEBUG", forecastday.title);
+                        Log.d("DEBUG", forecastday.fcttext);
+                        forecastAdapter.addForecastDay(forecastday);
+                    }
+                });
+                /*.subscribe(new Subscriber<List<Forecastday>>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(MainActivity.this, "Weather data updated", Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onFailure(Call<CurrentObservation> call, Throwable t) {
-                Log.d("Error: ", t.getMessage());
-            }
-        });
+                    @Override
+                    public void onError(final Throwable e) {
+                        e.printStackTrace();
+                        Toast.makeText
+                                (MainActivity.this, "Couldn't retrieve weather data", Toast.LENGTH_LONG)
+                                .show();
+                    }
 
-        Call<JSONResponse> forecastCall = service.getForecast("27909");
+                    @Override
+                    public void onNext(final List<Forecastday> forecastdays) {
+                        Log.d("DEBUG", forecastdays.toString());
+                        forecastAdapter.setForecastDays(forecastdays);
+                    }
+                });*/
 
-        forecastCall.enqueue(new Callback<JSONResponse>() {
-            @Override
-            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-
-                JSONResponse jsr = response.body();
-                forecastDays = new ArrayList<>(Arrays.asList(jsr.getTextForecasts()));
-                weatherAdapter = new WeatherAdapter(forecastDays);
-                conditionsAndForecastRecycler.setAdapter(weatherAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<JSONResponse> call, Throwable t) {
-                Log.d("Error: ", t.getMessage());
-            }
-        });
 
     }
 

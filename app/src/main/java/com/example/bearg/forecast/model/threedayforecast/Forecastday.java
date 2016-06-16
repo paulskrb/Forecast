@@ -8,6 +8,15 @@ import com.google.gson.annotations.SerializedName;
 @Generated("org.jsonschema2pojo")
 public class Forecastday {
 
+    // used
+    @SerializedName("title")
+    @Expose
+    public String title;
+    @SerializedName("fcttext")
+    @Expose
+    public String fcttext;
+
+    // unused
     @SerializedName("period")
     @Expose
     public Integer period;
@@ -17,12 +26,7 @@ public class Forecastday {
     @SerializedName("icon_url")
     @Expose
     public String iconUrl;
-    @SerializedName("title")
-    @Expose
-    public String title;
-    @SerializedName("fcttext")
-    @Expose
-    public String fcttext;
+
     @SerializedName("fcttext_metric")
     @Expose
     public String fcttextMetric;
