@@ -1,11 +1,7 @@
 package com.example.bearg.forecast.interfaces;
 
-import com.example.bearg.forecast.ForecastDayListWrapper;
 import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
-import com.example.bearg.forecast.model.threedayforecast.Forecastday;
 import com.example.bearg.forecast.model.threedayforecast.ThreeDayForecast;
-
-import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;

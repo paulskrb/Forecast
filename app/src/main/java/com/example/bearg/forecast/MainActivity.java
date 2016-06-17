@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             "http://api.wunderground.com/api/3c39584cb3cf6c8f/";
 
     private RecyclerView conditionsAndForecastRecycler;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private List<Forecastday> forecastdays = new ArrayList<>();
     private ForecastAdapter forecastAdapter;
 
@@ -66,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // currently, we just cancel the loading animation when the user refreshes
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         initRecycler();
         loadJSON();
 
