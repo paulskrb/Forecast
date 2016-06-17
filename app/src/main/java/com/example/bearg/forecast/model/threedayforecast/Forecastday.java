@@ -18,20 +18,19 @@ public class Forecastday {
 
     // unused
     @SerializedName("period")
-    @Expose
+    @Expose(deserialize = false)
     public Integer period;
     @SerializedName("icon")
-    @Expose
+    @Expose(deserialize = false)
     public String icon;
     @SerializedName("icon_url")
-    @Expose
+    @Expose(deserialize = false)
     public String iconUrl;
-
     @SerializedName("fcttext_metric")
-    @Expose
+    @Expose(deserialize = false)
     public String fcttextMetric;
     @SerializedName("pop")
-    @Expose
+    @Expose(deserialize = false)
     public String pop;
 
 }

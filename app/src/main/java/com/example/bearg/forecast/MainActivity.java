@@ -16,11 +16,15 @@ import android.widget.Toast;
 
 import com.example.bearg.forecast.adapters.ForecastAdapter;
 import com.example.bearg.forecast.interfaces.WeatherService;
+import com.example.bearg.forecast.model.threedayforecast.Forecast;
 import com.example.bearg.forecast.model.threedayforecast.Forecastday;
 
+import com.example.bearg.forecast.model.threedayforecast.ThreeDayForecast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -92,8 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadJSON() {
 
+        Type listType = new TypeToken<List<Forecastday>>(){}.getType();
+
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Forecastday.class, new TextForecastDeserializer())
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -104,12 +110,17 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         WeatherService weatherService = retrofit.create(WeatherService.class);
-        Observable<ForecastDayListWrapper> forecast = weatherService.getForecast("27909");
+        Observable<ThreeDayForecast> forecast = weatherService.getForecast("27909");
 
-        forecast.flatMap(forecastDayListWrapper -> Observable.from(forecastDayListWrapper.getTextForecasts()))
+        forecast.flatMap(new Func1<ThreeDayForecast, Observable<List<Forecastday>>>() {
+            @Override
+            public Observable<List<Forecastday>> call(final ThreeDayForecast threeDayForecast) {
+                return Observable.just(threeDayForecast.forecast.txtForecast.forecastday);
+            }
+        })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Forecastday>() {
+                .subscribe(new Subscriber<List<Forecastday>>() {
                     @Override
                     public void onCompleted() {
                         Toast.makeText(MainActivity.this, "Weather data updated", Toast.LENGTH_SHORT).show();
@@ -124,32 +135,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(final Forecastday forecastday) {
-                        Log.d("DEBUG", forecastday.title);
-                        Log.d("DEBUG", forecastday.fcttext);
-                        forecastAdapter.addForecastDay(forecastday);
+                    public void onNext(final List<Forecastday> forecastDays) {
+                        forecastAdapter.setForecastDays(forecastDays);
                     }
                 });
-                /*.subscribe(new Subscriber<List<Forecastday>>() {
-                    @Override
-                    public void onCompleted() {
-                        Toast.makeText(MainActivity.this, "Weather data updated", Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onError(final Throwable e) {
-                        e.printStackTrace();
-                        Toast.makeText
-                                (MainActivity.this, "Couldn't retrieve weather data", Toast.LENGTH_LONG)
-                                .show();
-                    }
-
-                    @Override
-                    public void onNext(final List<Forecastday> forecastdays) {
-                        Log.d("DEBUG", forecastdays.toString());
-                        forecastAdapter.setForecastDays(forecastdays);
-                    }
-                });*/
 
 
     }

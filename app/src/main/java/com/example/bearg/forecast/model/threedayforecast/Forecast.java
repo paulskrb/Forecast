@@ -11,8 +11,9 @@ public class Forecast {
     @SerializedName("txt_forecast")
     @Expose
     public TxtForecast txtForecast;
+
     @SerializedName("simpleforecast")
-    @Expose
+    @Expose(deserialize = false)
     public Simpleforecast simpleforecast;
 
 }

@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 public class TxtForecast {
 
     @SerializedName("date")
-    @Expose
+    @Expose(deserialize = false)
     public String date;
     @SerializedName("forecastday")
     @Expose

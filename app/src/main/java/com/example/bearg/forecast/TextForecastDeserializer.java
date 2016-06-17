@@ -3,6 +3,7 @@ package com.example.bearg.forecast;
 import com.example.bearg.forecast.model.threedayforecast.Forecastday;
 import com.example.bearg.forecast.model.threedayforecast.TxtForecast;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -10,29 +11,27 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bearg on 6/6/2016.
  */
-public class TextForecastDeserializer implements JsonDeserializer<Forecastday> {
+public class TextForecastDeserializer implements JsonDeserializer<List<Forecastday>> {
 
     @Override
-    public Forecastday deserialize(JsonElement json, Type typeOfT,
+    public List<Forecastday> deserialize(JsonElement json, Type typeOfT,
                                    JsonDeserializationContext context) throws JsonParseException {
 
-        JsonElement forecastDayJson = json.getAsJsonObject()
-                .get("forecastday");
+        JsonArray data = json.getAsJsonObject().getAsJsonArray("forecastday");
+        List<Forecastday> forecastList = new ArrayList<>();
 
-        final JsonObject forecastAsJsonObject = forecastDayJson.getAsJsonObject();
+        for (JsonElement e : data) {
+            forecastList.add((Forecastday) context.deserialize(e, Forecastday.class));
+        }
 
-        String dayOrNight = forecastAsJsonObject.get("title").getAsString();
-        String forecastText = forecastAsJsonObject.get("fcttext").getAsString();
+       return forecastList;
 
-        final Forecastday forecastday = new Forecastday();
-        forecastday.title = dayOrNight;
-        forecastday.fcttext = forecastText;
-
-        return new Gson().fromJson(forecastDayJson, Forecastday.class);
 
     }
 }

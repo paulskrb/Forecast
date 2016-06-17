@@ -9,9 +9,10 @@ import com.google.gson.annotations.SerializedName;
 public class ThreeDayForecast {
 
     @SerializedName("response")
-    @Expose
+    @Expose(deserialize = false)
     public Response response;
-    @SerializedName("getForecast")
+
+    @SerializedName("forecast")
     @Expose
     public Forecast forecast;
 
