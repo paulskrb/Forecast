@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String WEATHER_BASE_URL =
             "http://api.wunderground.com/api/3c39584cb3cf6c8f/";
 
+    private static final String ICON_BASE_URL =
+            "";
+
     private RecyclerView conditionsAndForecastRecycler;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<Forecastday> forecastdays = new ArrayList<>();

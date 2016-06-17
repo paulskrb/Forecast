@@ -15,6 +15,9 @@ public class Forecastday {
     @SerializedName("fcttext")
     @Expose
     public String fcttext;
+    @SerializedName("icon_url")
+    @Expose
+    public String iconUrl;
 
     // unused
     @SerializedName("period")
@@ -23,9 +26,6 @@ public class Forecastday {
     @SerializedName("icon")
     @Expose(deserialize = false)
     public String icon;
-    @SerializedName("icon_url")
-    @Expose(deserialize = false)
-    public String iconUrl;
     @SerializedName("fcttext_metric")
     @Expose(deserialize = false)
     public String fcttextMetric;

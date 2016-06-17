@@ -1,24 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:layout_margin="16dp">
 
-    <TextView
-        android:id="@+id/day_or_night"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="4dp"
-              android:textAppearance="?attr/textAppearanceListItem"
-              android:textStyle="bold"
-        tools:text="Sunday Night"/>
-
-    <TextView
-        android:id="@+id/forecast_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        tools:text="Thunderstorms likely in the evening. Then the chance of scattered thunderstorms later on. Low 72F. Winds SW at 10 to 20 mph. Chance of rain 80%."/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/day_or_night"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="75"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                tools:text="Sunday Night"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                tools:text="85 / 76"
+                android:textSize="20sp"
+                android:id="@+id/high_and_low"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/forecast_text"
+                android:layout_width="0dp"
+                android:layout_weight="75"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                tools:text="Thunderstorms likely in the evening. Then the chance of scattered thunderstorms later on. Low 72F. Winds SW at 10 to 20 mph. Chance of rain 80%."/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="25"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                tools:src="@drawable/partlycloudy"
+                android:id="@+id/weather_icon"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>
