@@ -90,7 +90,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2 mph"
+                            tools:text="2 mph"
                             android:textStyle="bold"
                             android:id="@+id/wind_speed"/>
 
@@ -115,7 +115,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="57%"
+                            tools:text="57%"
                             android:textStyle="bold"
                             android:id="@+id/rel_humidity"/>
 
@@ -138,7 +138,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="60&#xb0;"
+                            tools:text="60&#xb0;"
                             android:textStyle="bold"
                             android:id="@+id/dewpoint"/>
 

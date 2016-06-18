@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.example.bearg.forecast.R;
 import com.example.bearg.forecast.interfaces.WeatherApiManager;
 import com.example.bearg.forecast.model.currentconditions.CurrentConditions;
-import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
-import com.example.bearg.forecast.model.currentconditions.DisplayLocation;
 import com.squareup.picasso.Picasso;
 
 import java.util.regex.Matcher;
@@ -38,6 +36,9 @@ public class ConditionsFragment extends Fragment {
     private TextView updatedTimeTv;
     private TextView currentWeatherTv;
     private TextView tempTv;
+    private TextView windSpeedTv;
+    private TextView relativeHumidityTv;
+    private TextView dewPointTv;
 
     public ConditionsFragment() {
         // Required empty public constructor
@@ -53,10 +54,15 @@ public class ConditionsFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // initialize views
         currentWeatherIcon = (ImageView) view.findViewById(R.id.current_weather_icon);
         updatedTimeTv = (TextView) view.findViewById(R.id.updated);
         currentWeatherTv = (TextView) view.findViewById(R.id.current_weather);
         tempTv = (TextView) view.findViewById(R.id.temp);
+        windSpeedTv = (TextView) view.findViewById(R.id.wind_speed);
+        relativeHumidityTv = (TextView) view.findViewById(R.id.rel_humidity);
+        dewPointTv = (TextView) view.findViewById(R.id.dewpoint);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.conditions_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -124,6 +130,14 @@ public class ConditionsFragment extends Fragment {
                         // U+00B0 is the Unicode code point for the degree symbol
                         String tempF = String.valueOf(Math.round(currentConditions.currentObservation.tempF)) + "\u00b0";
                         tempTv.setText(tempF);
+
+                        String windSpeed = String.valueOf(Math.round(currentConditions.currentObservation.windMph)) + " mph";
+                        windSpeedTv.setText(windSpeed);
+
+                        relativeHumidityTv.setText(currentConditions.currentObservation.relativeHumidity);
+
+                        String dewpointF = String.valueOf(Math.round(currentConditions.currentObservation.dewpointF)) + "\u00b0";
+                        dewPointTv.setText(dewpointF);
 
                     }
                 });
