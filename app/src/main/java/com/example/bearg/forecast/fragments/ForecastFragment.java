@@ -24,7 +24,6 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -58,7 +57,7 @@ public class ForecastFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get the SwipeRefreshLayout View from the inflated layout file
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.forecast_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -82,9 +81,14 @@ public class ForecastFragment extends Fragment {
 
     private void loadForecast() {
 
-        Observable<ThreeDayForecast> forecast = WeatherApiManager.getWeatherService().getForecast("27909");
+        Observable<ThreeDayForecast> forecastObservable = WeatherApiManager.getWeatherService().getForecast("27909");
 
-        forecast.flatMap(threeDayForecast -> Observable.just(threeDayForecast.forecast.txtForecast.forecastday))
+        // ThreeDayForecast is the root of our JSONElement hierarchy. We flatMap from
+        // an Observable<ThreeDayForecast> to an Observable<List<Forecastday>>.
+        // the flatMap function takes threeDayForecast, which is name we give to an
+        // Observable<ThreeDayForecast> instance, and returns an Observable<List<Forecastday>>,
+        // which is what we subscribe to
+        forecastObservable.flatMap(threeDayForecast -> Observable.just(threeDayForecast.forecast.txtForecast.forecastday))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Forecastday>>() {

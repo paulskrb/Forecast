@@ -66,9 +66,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
         holder.forecastTv.setText(forecastDays.get(position).fcttext);
 
         Context ctx = holder.iconView.getContext();
-        String icon_url = forecastDays.get(position).iconUrl;
+        String iconUrl = forecastDays.get(position).iconUrl;
 
-        Picasso.with(ctx).load(icon_url).resize(150, 150).error(android.R.drawable.ic_dialog_alert).into(holder.iconView);
+        Picasso.with(ctx).load(iconUrl).resize(150, 150).error(android.R.drawable.ic_dialog_alert).into(holder.iconView);
     }
 
     @Override

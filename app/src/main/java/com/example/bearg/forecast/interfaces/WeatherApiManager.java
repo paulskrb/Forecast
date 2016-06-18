@@ -3,6 +3,7 @@ package com.example.bearg.forecast.interfaces;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.bearg.forecast.model.currentconditions.CurrentConditions;
 import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
 import com.example.bearg.forecast.model.threedayforecast.ThreeDayForecast;
 import com.google.gson.Gson;
@@ -29,7 +30,7 @@ public class WeatherApiManager {
 
 
         @GET("conditions/q/{location}.json")
-        Observable<CurrentObservation> getObservation(@Path("location") String location);
+        Observable<CurrentConditions> getObservation(@Path("location") String location);
 
         @GET("forecast/q/{location}.json")
         Observable<ThreeDayForecast> getForecast(@Path("location") String location);
