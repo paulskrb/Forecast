@@ -39,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
                 new ViewPagerAdapter(getSupportFragmentManager());
 
         // add the fragments and set the ViewPager to use our adapter
-        viewPagerAdapter.addFragment(new ForecastFragment(), "Forecast");
-        viewPagerAdapter.addFragment(new ConditionsFragment(), "Conditions");
+        viewPagerAdapter.addFragment(new ConditionsFragment(), "Current");
+        viewPagerAdapter.addFragment(new ForecastFragment(), "3-Day Forecast");
+
 
         viewPager.setAdapter(viewPagerAdapter);
     }
