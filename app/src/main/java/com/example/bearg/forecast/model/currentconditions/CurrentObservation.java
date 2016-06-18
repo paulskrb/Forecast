@@ -23,7 +23,7 @@ public class CurrentObservation {
 
     @SerializedName("temp_f")
     @Expose
-    public Double tempF;
+    public double tempF;
 
     @SerializedName("relative_humidity")
     @Expose
@@ -39,11 +39,11 @@ public class CurrentObservation {
 
     @SerializedName("wind_mph")
     @Expose
-    public Double windMph;
+    public double windMph;
 
     @SerializedName("wind_gust_mph")
     @Expose
-    public Integer windGustMph;
+    public double windGustMph;
 
     @SerializedName("pressure_in")
     @Expose
@@ -55,7 +55,7 @@ public class CurrentObservation {
 
     @SerializedName("dewpoint_f")
     @Expose
-    public Integer dewpointF;
+    public double dewpointF;
 
     @SerializedName("heat_index_f")
     @Expose
@@ -120,16 +120,16 @@ public class CurrentObservation {
     public String temperatureString;
     @SerializedName("temp_c")
     @Expose(deserialize = false)
-    public Double tempC;
+    public double tempC;
     @SerializedName("wind_degrees")
     @Expose(deserialize = false)
-    public Integer windDegrees;
+    public double windDegrees;
     @SerializedName("wind_kph")
     @Expose(deserialize = false)
-    public Integer windKph;
+    public double windKph;
     @SerializedName("wind_gust_kph")
     @Expose(deserialize = false)
-    public Integer windGustKph;
+    public double windGustKph;
     @SerializedName("pressure_mb")
     @Expose(deserialize = false)
     public String pressureMb;
@@ -138,7 +138,7 @@ public class CurrentObservation {
     public String dewpointString;
     @SerializedName("dewpoint_c")
     @Expose(deserialize = false)
-    public Integer dewpointC;
+    public double dewpointC;
     @SerializedName("heat_index_string")
     @Expose(deserialize = false)
     public String heatIndexString;

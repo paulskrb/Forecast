@@ -22,7 +22,7 @@ public class Forecastday {
     // unused
     @SerializedName("period")
     @Expose(deserialize = false)
-    public Integer period;
+    public double period;
     @SerializedName("icon")
     @Expose(deserialize = false)
     public String icon;

@@ -19,6 +19,9 @@ import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
 import com.example.bearg.forecast.model.currentconditions.DisplayLocation;
 import com.squareup.picasso.Picasso;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -99,9 +102,29 @@ public class ConditionsFragment extends Fragment {
                         Picasso.with(getContext()).load(iconUrl).resize(150, 150)
                                 .error(android.R.drawable.ic_dialog_alert).into(currentWeatherIcon);
 
-                        updatedTimeTv.setText(currentConditions.currentObservation.observationTime);
+                        String observationTime = currentConditions.currentObservation.observationTime;
+
+                        // will match ?X:XX PM/AM, where ? means an optional first digit
+                        String regex = "\\d?\\d:\\d{2}\\s[AP]M";
+
+                        Pattern pattern = Pattern.compile(regex);
+                        Matcher matcher = pattern.matcher(observationTime);
+                        if (matcher.find()) {
+                            // matcher.group(0) gets the matched portion, ?X:XX PM/AM in this case
+                            updatedTimeTv.setText(
+                                    String.format("Updated %s", matcher.group(0)));
+                        }
+
+                        else {
+                            updatedTimeTv.setText("Update Time Unknown");
+                        }
+
                         currentWeatherTv.setText(currentConditions.currentObservation.weather);
-                        tempTv.setText(String.valueOf(Math.round(currentConditions.currentObservation.tempF)));
+
+                        // U+00B0 is the Unicode code point for the degree symbol
+                        String tempF = String.valueOf(Math.round(currentConditions.currentObservation.tempF)) + "\u00b0";
+                        tempTv.setText(tempF);
+
                     }
                 });
 
