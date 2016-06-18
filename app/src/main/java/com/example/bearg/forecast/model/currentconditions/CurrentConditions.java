@@ -9,8 +9,9 @@ import com.google.gson.annotations.SerializedName;
 public class CurrentConditions {
 
     @SerializedName("response")
-    @Expose
+    @Expose(deserialize = false)
     public Response response;
+
     @SerializedName("current_observation")
     @Expose
     public CurrentObservation currentObservation;

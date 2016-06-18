@@ -9,6 +9,14 @@ import com.google.gson.annotations.SerializedName;
 public class CurrentObservation {
 
     // these fields will be used
+    @SerializedName("display_location")
+    @Expose
+    public DisplayLocation displayLocation;
+
+    @SerializedName("observation_time")
+    @Expose
+    public String observationTime;
+
     @SerializedName("weather")
     @Expose
     public String weather;
@@ -17,172 +25,182 @@ public class CurrentObservation {
     @Expose
     public Double tempF;
 
-    // unused
-
-
-    @SerializedName("image")
-    @Expose
-    public Image image;
-    @SerializedName("display_location")
-    @Expose
-    public DisplayLocation displayLocation;
-    @SerializedName("observation_location")
-    @Expose
-    public ObservationLocation observationLocation;
-    @SerializedName("estimated")
-    @Expose
-    public Estimated estimated;
-    @SerializedName("station_id")
-    @Expose
-    public String stationId;
-    @SerializedName("observation_time")
-    @Expose
-    public String observationTime;
-    @SerializedName("observation_time_rfc822")
-    @Expose
-    public String observationTimeRfc822;
-    @SerializedName("observation_epoch")
-    @Expose
-    public String observationEpoch;
-    @SerializedName("local_time_rfc822")
-    @Expose
-    public String localTimeRfc822;
-    @SerializedName("local_epoch")
-    @Expose
-    public String localEpoch;
-    @SerializedName("local_tz_short")
-    @Expose
-    public String localTzShort;
-    @SerializedName("local_tz_long")
-    @Expose
-    public String localTzLong;
-    @SerializedName("local_tz_offset")
-    @Expose
-    public String localTzOffset;
-
-    @SerializedName("temperature_string")
-    @Expose
-    public String temperatureString;
-
-    @SerializedName("temp_c")
-    @Expose
-    public Double tempC;
     @SerializedName("relative_humidity")
     @Expose
     public String relativeHumidity;
+
     @SerializedName("wind_string")
     @Expose
     public String windString;
+
     @SerializedName("wind_dir")
     @Expose
     public String windDir;
-    @SerializedName("wind_degrees")
-    @Expose
-    public Integer windDegrees;
+
     @SerializedName("wind_mph")
     @Expose
     public Double windMph;
+
     @SerializedName("wind_gust_mph")
     @Expose
     public Integer windGustMph;
-    @SerializedName("wind_kph")
-    @Expose
-    public Integer windKph;
-    @SerializedName("wind_gust_kph")
-    @Expose
-    public Integer windGustKph;
-    @SerializedName("pressure_mb")
-    @Expose
-    public String pressureMb;
+
     @SerializedName("pressure_in")
     @Expose
     public String pressureIn;
+
     @SerializedName("pressure_trend")
     @Expose
     public String pressureTrend;
-    @SerializedName("dewpoint_string")
-    @Expose
-    public String dewpointString;
+
     @SerializedName("dewpoint_f")
     @Expose
     public Integer dewpointF;
-    @SerializedName("dewpoint_c")
-    @Expose
-    public Integer dewpointC;
-    @SerializedName("heat_index_string")
-    @Expose
-    public String heatIndexString;
+
     @SerializedName("heat_index_f")
     @Expose
     public String heatIndexF;
-    @SerializedName("heat_index_c")
-    @Expose
-    public String heatIndexC;
-    @SerializedName("windchill_string")
-    @Expose
-    public String windchillString;
+
     @SerializedName("windchill_f")
     @Expose
     public String windchillF;
-    @SerializedName("windchill_c")
-    @Expose
-    public String windchillC;
-    @SerializedName("feelslike_string")
-    @Expose
-    public String feelslikeString;
-    @SerializedName("feelslike_f")
-    @Expose
-    public String feelslikeF;
-    @SerializedName("feelslike_c")
-    @Expose
-    public String feelslikeC;
-    @SerializedName("visibility_mi")
-    @Expose
-    public String visibilityMi;
-    @SerializedName("visibility_km")
-    @Expose
-    public String visibilityKm;
-    @SerializedName("solarradiation")
-    @Expose
-    public String solarradiation;
+
     @SerializedName("UV")
     @Expose
     public String uV;
-    @SerializedName("precip_1hr_string")
-    @Expose
-    public String precip1hrString;
+
     @SerializedName("precip_1hr_in")
     @Expose
     public String precip1hrIn;
-    @SerializedName("precip_1hr_metric")
-    @Expose
-    public String precip1hrMetric;
-    @SerializedName("precip_today_string")
-    @Expose
-    public String precipTodayString;
+
     @SerializedName("precip_today_in")
     @Expose
     public String precipTodayIn;
-    @SerializedName("precip_today_metric")
-    @Expose
-    public String precipTodayMetric;
-    @SerializedName("icon")
-    @Expose
-    public String icon;
+
     @SerializedName("icon_url")
     @Expose
     public String iconUrl;
+
+    // unused
+    @SerializedName("image")
+    @Expose(deserialize = false)
+    public Image image;
+    @SerializedName("observation_location")
+    @Expose(deserialize = false)
+    public ObservationLocation observationLocation;
+    @SerializedName("estimated")
+    @Expose(deserialize = false)
+    public Estimated estimated;
+    @SerializedName("station_id")
+    @Expose(deserialize = false)
+    public String stationId;
+    @SerializedName("observation_time_rfc822")
+    @Expose(deserialize = false)
+    public String observationTimeRfc822;
+    @SerializedName("observation_epoch")
+    @Expose(deserialize = false)
+    public String observationEpoch;
+    @SerializedName("local_time_rfc822")
+    @Expose(deserialize = false)
+    public String localTimeRfc822;
+    @SerializedName("local_epoch")
+    @Expose(deserialize = false)
+    public String localEpoch;
+    @SerializedName("local_tz_short")
+    @Expose(deserialize = false)
+    public String localTzShort;
+    @SerializedName("local_tz_long")
+    @Expose(deserialize = false)
+    public String localTzLong;
+    @SerializedName("local_tz_offset")
+    @Expose(deserialize = false)
+    public String localTzOffset;
+    @SerializedName("temperature_string")
+    @Expose(deserialize = false)
+    public String temperatureString;
+    @SerializedName("temp_c")
+    @Expose(deserialize = false)
+    public Double tempC;
+    @SerializedName("wind_degrees")
+    @Expose(deserialize = false)
+    public Integer windDegrees;
+    @SerializedName("wind_kph")
+    @Expose(deserialize = false)
+    public Integer windKph;
+    @SerializedName("wind_gust_kph")
+    @Expose(deserialize = false)
+    public Integer windGustKph;
+    @SerializedName("pressure_mb")
+    @Expose(deserialize = false)
+    public String pressureMb;
+    @SerializedName("dewpoint_string")
+    @Expose(deserialize = false)
+    public String dewpointString;
+    @SerializedName("dewpoint_c")
+    @Expose(deserialize = false)
+    public Integer dewpointC;
+    @SerializedName("heat_index_string")
+    @Expose(deserialize = false)
+    public String heatIndexString;
+
+    @SerializedName("heat_index_c")
+    @Expose(deserialize = false)
+    public String heatIndexC;
+    @SerializedName("windchill_string")
+    @Expose(deserialize = false)
+    public String windchillString;
+
+    @SerializedName("windchill_c")
+    @Expose(deserialize = false)
+    public String windchillC;
+    @SerializedName("feelslike_string")
+    @Expose(deserialize = false)
+    public String feelslikeString;
+    @SerializedName("feelslike_f")
+    @Expose(deserialize = false)
+    public String feelslikeF;
+    @SerializedName("feelslike_c")
+    @Expose(deserialize = false)
+    public String feelslikeC;
+    @SerializedName("visibility_mi")
+    @Expose(deserialize = false)
+    public String visibilityMi;
+    @SerializedName("visibility_km")
+    @Expose(deserialize = false)
+    public String visibilityKm;
+    @SerializedName("solarradiation")
+    @Expose(deserialize = false)
+    public String solarradiation;
+
+    @SerializedName("precip_1hr_string")
+    @Expose(deserialize = false)
+    public String precip1hrString;
+
+    @SerializedName("precip_1hr_metric")
+    @Expose(deserialize = false)
+    public String precip1hrMetric;
+    @SerializedName("precip_today_string")
+    @Expose(deserialize = false)
+    public String precipTodayString;
+
+    @SerializedName("precip_today_metric")
+    @Expose(deserialize = false)
+    public String precipTodayMetric;
+    @SerializedName("icon")
+    @Expose(deserialize = false)
+    public String icon;
+
     @SerializedName("forecast_url")
-    @Expose
+    @Expose(deserialize = false)
     public String forecastUrl;
     @SerializedName("history_url")
-    @Expose
+    @Expose(deserialize = false)
     public String historyUrl;
     @SerializedName("ob_url")
-    @Expose
+    @Expose(deserialize = false)
     public String obUrl;
     @SerializedName("nowcast")
-    @Expose
+    @Expose(deserialize = false)
     public String nowcast;
 
 }
