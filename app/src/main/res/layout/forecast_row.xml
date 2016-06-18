@@ -18,7 +18,8 @@
 
             <TextView
                 android:id="@+id/day_or_night"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="75"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
@@ -27,6 +28,14 @@
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 tools:text="Sunday Night" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="25"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                tools:src="@drawable/partlycloudy"
+                android:id="@+id/weather_icon"/>
 
         </LinearLayout>
 
@@ -38,19 +47,13 @@
 
             <TextView
                 android:id="@+id/forecast_text"
-                android:layout_width="0dp"
-                android:layout_weight="75"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 tools:text="Thunderstorms likely in the evening. Then the chance of scattered thunderstorms later on. Low 72F. Winds SW at 10 to 20 mph. Chance of rain 80%."/>
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_weight="25"
-                android:layout_height="wrap_content"
-                tools:src="@drawable/partlycloudy"
-                android:id="@+id/weather_icon"/>
+
         </LinearLayout>
 
     </LinearLayout>
