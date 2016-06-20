@@ -168,13 +168,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="00"
+                            android:textStyle="bold"
                             android:id="@+id/uv_index"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="UV Index"
-                            android:textStyle="bold"
                             />
 
                     </LinearLayout>
@@ -191,6 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="00.00"
+                            android:textStyle="bold"
                             android:id="@+id/pressure"
                             />
 
@@ -198,7 +199,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Pressure"
-                            android:textStyle="bold"
                             />
 
 
@@ -215,6 +215,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="00&#xb0;"
+                            android:textStyle="bold"
                             android:id="@+id/feelsLikeF"
                             />
 
@@ -222,7 +223,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Feels Like"
-                            android:textStyle="bold"
                             />
 
 
