@@ -57,14 +57,6 @@ public class CurrentObservation {
     @Expose
     public double dewpointF;
 
-    @SerializedName("heat_index_f")
-    @Expose
-    public String heatIndexF;
-
-    @SerializedName("windchill_f")
-    @Expose
-    public String windchillF;
-
     @SerializedName("UV")
     @Expose
     public String uV;
@@ -80,6 +72,10 @@ public class CurrentObservation {
     @SerializedName("icon_url")
     @Expose
     public String iconUrl;
+
+    @SerializedName("feelslike_f")
+    @Expose
+    public String feelslikeF;
 
     // unused
     @SerializedName("image")
@@ -156,9 +152,7 @@ public class CurrentObservation {
     @SerializedName("feelslike_string")
     @Expose(deserialize = false)
     public String feelslikeString;
-    @SerializedName("feelslike_f")
-    @Expose(deserialize = false)
-    public String feelslikeF;
+
     @SerializedName("feelslike_c")
     @Expose(deserialize = false)
     public String feelslikeC;
@@ -202,5 +196,13 @@ public class CurrentObservation {
     @SerializedName("nowcast")
     @Expose(deserialize = false)
     public String nowcast;
+
+    @SerializedName("heat_index_f")
+    @Expose(deserialize = false)
+    public String heatIndexF;
+
+    @SerializedName("windchill_f")
+    @Expose(deserialize = false)
+    public String windchillF;
 
 }
