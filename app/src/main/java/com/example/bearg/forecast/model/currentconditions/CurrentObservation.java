@@ -77,6 +77,10 @@ public class CurrentObservation {
     @Expose
     public String feelslikeF;
 
+    @SerializedName("observation_epoch")
+    @Expose
+    public String observationEpoch;
+
     // unused
     @SerializedName("image")
     @Expose(deserialize = false)
@@ -93,9 +97,7 @@ public class CurrentObservation {
     @SerializedName("observation_time_rfc822")
     @Expose(deserialize = false)
     public String observationTimeRfc822;
-    @SerializedName("observation_epoch")
-    @Expose(deserialize = false)
-    public String observationEpoch;
+
     @SerializedName("local_time_rfc822")
     @Expose(deserialize = false)
     public String localTimeRfc822;

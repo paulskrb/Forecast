@@ -28,7 +28,6 @@ public class WeatherApiManager {
 
     public interface WeatherService {
 
-
         @GET("conditions/q/{location}.json")
         Observable<CurrentConditions> getObservation(@Path("location") String location);
 

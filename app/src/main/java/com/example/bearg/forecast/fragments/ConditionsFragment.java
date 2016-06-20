@@ -18,6 +18,7 @@ import com.example.bearg.forecast.model.currentconditions.CurrentConditions;
 import com.example.bearg.forecast.model.currentconditions.CurrentObservation;
 import com.squareup.picasso.Picasso;
 
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +44,8 @@ public class ConditionsFragment extends Fragment {
     private TextView uvTv;
     private TextView pressureTv;
     private TextView feelsLikeTv;
+
+    private Long observationEpoch;
 
     public ConditionsFragment() {
         // Required empty public constructor
@@ -75,7 +78,7 @@ public class ConditionsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadConditions();
+                update();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -84,10 +87,24 @@ public class ConditionsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadConditions();
+        update();
     }
 
-    private void loadConditions() {
+    private void update() {
+
+        // compare observation time (given in JSON as seconds since epoch) to current time.
+        // if difference between current time and observation time is less than 300 seconds (5 min),
+        // new data is not yet available and we should avoid making the api call to refresh the data
+       if (observationEpoch != null) {
+           GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
+           Long currentEpoch = calendar.getTimeInMillis() / 1000L;
+           long timeDifference = currentEpoch - observationEpoch;
+
+           if (timeDifference < 300) {
+               Toast.makeText(getContext(), "Weather data is up to date", Toast.LENGTH_LONG).show();
+               return;
+           }
+       }
 
         Observable<CurrentConditions> observation =
                 WeatherApiManager.getWeatherService().getObservation("27909");
@@ -117,7 +134,12 @@ public class ConditionsFragment extends Fragment {
     }
 
     private void loadConditions(CurrentConditions currentConditions) {
+
         final CurrentObservation currentObservation = currentConditions.currentObservation;
+
+        // used to compare times and check whether we should make the call to update the data
+        observationEpoch = Long.parseLong(currentObservation.observationEpoch);
+
         String iconUrl = currentObservation.iconUrl;
         Picasso.with(getContext()).load(iconUrl).resize(150, 150)
                 .error(android.R.drawable.ic_dialog_alert).into(currentWeatherIcon);
