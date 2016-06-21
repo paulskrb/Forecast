@@ -66,7 +66,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
         holder.forecastTv.setText(forecastDays.get(position).fcttext);
 
         Context ctx = holder.iconView.getContext();
-        String iconUrl = forecastDays.get(position).iconUrl;
+        // icon url is http://icons.wxug.com/i/c/?/ICON.gif where ? is a-k. changing the
+        // letter changes the icon set that displays
+        String iconUrl = forecastDays.get(position).iconUrl.replaceFirst("k", "j");
 
         Picasso.with(ctx).load(iconUrl).resize(150, 150).error(android.R.drawable.ic_dialog_alert).into(holder.iconView);
     }

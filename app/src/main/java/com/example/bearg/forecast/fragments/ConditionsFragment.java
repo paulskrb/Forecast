@@ -142,7 +142,9 @@ public class ConditionsFragment extends Fragment {
         // used to compare times and check whether we should make the call to update the data
         observationEpoch = Long.parseLong(currentObservation.observationEpoch);
 
-        String iconUrl = currentObservation.iconUrl;
+        // icon url is http://icons.wxug.com/i/c/?/ICON.gif where ? is a-k. changing the
+        // letter changes the icon set that displays
+        String iconUrl = currentObservation.iconUrl.replaceFirst("k", "j");
         Picasso.with(getContext()).load(iconUrl).resize(150, 150)
                 .error(android.R.drawable.ic_dialog_alert).into(currentWeatherIcon);
 

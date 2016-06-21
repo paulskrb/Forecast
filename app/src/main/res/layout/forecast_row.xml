@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="130dp"
+              android:layout_height="120dp"
               android:layout_marginBottom="8dp">
 
     <LinearLayout
@@ -21,21 +21,21 @@
                 android:layout_width="0dp"
                 android:layout_weight="75"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="8dp"
                 android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                tools:text="Sunday Night" />
+                tools:text="Sunday Night"
+                android:layout_marginTop="8dp"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_weight="25"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 tools:src="@drawable/partlycloudy"
-                android:id="@+id/weather_icon"/>
+                android:id="@+id/weather_icon"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"/>
 
         </LinearLayout>
 
@@ -49,9 +49,11 @@
                 android:id="@+id/forecast_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                tools:text="Thunderstorms likely in the evening. Then the chance of scattered thunderstorms later on. Low 72F. Winds SW at 10 to 20 mph. Chance of rain 80%."/>
+                tools:text="Thunderstorms likely in the evening. Then the chance of scattered thunderstorms later on. Low 72F. Winds SW at 10 to 20 mph. Chance of rain 80%."
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"/>
 
 
         </LinearLayout>
