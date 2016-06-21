@@ -3,6 +3,8 @@ package com.example.bearg.forecast.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -101,7 +103,7 @@ public class ConditionsFragment extends Fragment {
            long timeDifference = currentEpoch - observationEpoch;
 
            if (timeDifference < 300) {
-               Toast.makeText(getContext(), "Weather data is up to date", Toast.LENGTH_LONG).show();
+               Snackbar.make(getView(),"Weather data is up to date", Snackbar.LENGTH_LONG).show();
                return;
            }
        }
@@ -114,14 +116,14 @@ public class ConditionsFragment extends Fragment {
                 .subscribe(new Subscriber<CurrentConditions>() {
                     @Override
                     public void onCompleted() {
-                        Toast.makeText(getContext(), "Weather data updated", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), "Weather data updated", Snackbar.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onError(final Throwable e) {
                         e.printStackTrace();
-                        Toast.makeText
-                                (getContext(), "Couldn't retrieve weather data", Toast.LENGTH_LONG)
+                        Snackbar.make
+                                (getView(), "Couldn't retrieve weather data", Snackbar.LENGTH_LONG)
                                 .show();
                     }
 
@@ -182,7 +184,7 @@ public class ConditionsFragment extends Fragment {
 
         pressureTv.setText(currentObservation.pressureIn);
 
-        String feelsLikeF = currentObservation.feelslikeF + "\u00b0";
+        String feelsLikeF = String.valueOf(Math.round(Double.parseDouble(currentObservation.feelslikeF))) + "\u00b0";
         feelsLikeTv.setText(feelsLikeF);
 
     }

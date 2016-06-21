@@ -94,14 +94,11 @@ public class ForecastFragment extends Fragment {
                 .subscribe(new Subscriber<List<Forecastday>>() {
                     @Override
                     public void onCompleted() {
-                        Toast.makeText(getContext(), "Weather data updated", Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
                     public void onError(final Throwable e) {
                         e.printStackTrace();
-                        Toast.makeText
-                                (getContext(), "Couldn't retrieve weather data", Toast.LENGTH_LONG)
-                                .show();
                     }
 
                     @Override
