@@ -23,6 +23,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
     private List<Forecastday> forecastDays = new ArrayList<>();
 
     public ForecastAdapter(List<Forecastday> forecastDays) {
+
         this.forecastDays = forecastDays;
     }
 
