@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.bearg.forecast.R;
 import com.example.bearg.forecast.adapters.ForecastAdapter;
@@ -31,8 +30,7 @@ import rx.schedulers.Schedulers;
  */
 public class ForecastFragment extends Fragment {
 
-    private RecyclerView conditionsAndForecastRecycler;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView forecastRecycler;
     private List<Forecastday> forecastdays = new ArrayList<>();
     private ForecastAdapter forecastAdapter;
 
@@ -56,21 +54,12 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Get the SwipeRefreshLayout View from the inflated layout file
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.forecast_refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // currently, we just cancel the loading animation when the user refreshes
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
 
-        conditionsAndForecastRecycler = (RecyclerView) view.findViewById(R.id.recycler);
-        conditionsAndForecastRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        conditionsAndForecastRecycler.setHasFixedSize(true);
+        forecastRecycler = (RecyclerView) view.findViewById(R.id.recycler);
+        forecastRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        forecastRecycler.setHasFixedSize(true);
         forecastAdapter = new ForecastAdapter(forecastdays);
-        conditionsAndForecastRecycler.setAdapter(forecastAdapter);
+        forecastRecycler.setAdapter(forecastAdapter);
     }
 
     @Override

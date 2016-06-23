@@ -76,14 +76,7 @@ public class ConditionsFragment extends Fragment {
         pressureTv = (TextView) view.findViewById(R.id.pressure);
         feelsLikeTv = (TextView) view.findViewById(R.id.feelsLikeF);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.conditions_refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                update();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+
     }
 
     @Override

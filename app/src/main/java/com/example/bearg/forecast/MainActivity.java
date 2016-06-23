@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.example.bearg.forecast.adapters.ViewPagerAdapter;
 import com.example.bearg.forecast.fragments.ConditionsFragment;
 import com.example.bearg.forecast.fragments.ForecastFragment;
+import com.example.bearg.forecast.fragments.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 new ViewPagerAdapter(getSupportFragmentManager());
 
         // add the fragments and set the ViewPager to use our adapter
-        viewPagerAdapter.addFragment(new ConditionsFragment(), "Current");
-        viewPagerAdapter.addFragment(new ForecastFragment(), "3-Day Forecast");
-
-
+        viewPagerAdapter.addFragment(new WeatherFragment(), "Elizabeth City");
         viewPager.setAdapter(viewPagerAdapter);
     }
 
